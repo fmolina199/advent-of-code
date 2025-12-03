@@ -13,17 +13,25 @@ fn main() {
 	for line in input.lines() {
 		let side = &line[0..1];
 		let number = (&line[1..]).parse::<i32>().expect("Expect that second part of input is a number");
+		let cicles = number / total_positions;
+		let diff = number % total_positions;
+		let inital_dial = dial;
 		if side == "R" {
-			//println!("Adding {number}");
-			dial = (dial + number).rem_euclid(total_positions);
+			dial = dial + diff;
 		} else if side == "L" {
-			//println!("Subtracting {number}");
-			dial = (dial - number).rem_euclid(total_positions);
+			dial = dial - diff;
 		}
-		println!("Partial dial: {dial}");
-		if dial == 0 {
+		if dial > 100 || (dial < 0 && inital_dial != 0) {
 			count += 1;
 		}
+		dial = dial.rem_euclid(total_positions);
+		println!("\nAdding {cicles} from {line}");
+		println!("Partial dial: {dial}");
+		count += cicles;
+		if dial == 0 && diff != 0 {
+			count += 1;
+		}
+		println!("Partial count: {count}");
 	}
 	println!("Final result: {count}");
 }
