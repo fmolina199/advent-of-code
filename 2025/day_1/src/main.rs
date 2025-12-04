@@ -1,15 +1,11 @@
 use std::fs;
 
-fn main() {
-	// Read input file
-	let input = fs::read_to_string("./input.txt")
-		.expect("Expect a input file on this folder");
-	
-	// Starting point
+
+fn process_input(input: &String) -> i64 {
 	let total_positions = 100;
 	let mut dial = 50;
 	let mut count = 0;
-	
+
 	for line in input.lines() {
 		let side = &line[0..1];
 		let number = (&line[1..]).parse::<i32>().expect("Expect that second part of input is a number");
@@ -33,5 +29,13 @@ fn main() {
 		}
 		println!("Partial count: {count}");
 	}
-	println!("Final result: {count}");
+	count.into()
+}
+
+fn main() {
+	// Read input file
+	let input = fs::read_to_string("./input.txt")
+		.expect("Expect a input file on this folder");
+	let result = process_input(&input);
+	println!("Final result: {result}");
 }
